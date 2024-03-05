@@ -24,14 +24,20 @@ export default function LoginForm() {
     e.preventDefault();
     axios
       .post("http://localhost:8000/auth/login", loginData)
-      .then((result) => {
-        if (result.data == "Logedin") {
-          console.log("data sent successfully");
+      .then((response) => {
+        console.log('data gaya');
+        const token = response.data.token;
+        if (token) {
+          console.log("Login successful");
+          console.log(token);
+          localStorage.setItem("token", token);
           navigate("/");
-        } else console.log("incorrect password");
+        } else {
+          console.log("Incorrect credentials");
+        }
       })
       .catch((err) => {
-        console.log(`Error aa gaya bhai : ${err}`);
+        console.log(`Error hai bhai: ${err}`);
       });
   };
 
